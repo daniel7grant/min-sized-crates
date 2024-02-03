@@ -1,0 +1,12 @@
+[package]
+name = "bpaf-size"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bpaf = { version = "0.9.9", features = ["derive"] }
+
+[profile.release]
+strip = true
