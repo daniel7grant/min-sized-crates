@@ -17,15 +17,15 @@ OS: GNU/Linux
 - clap: +520kB
 - gumdrop: +28kB (**-94.6%**)
 
-The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featured crate. It provides both a builder and derive style API and has tons of features (help generation, validation, suggestions, completion, etc.). However most people only need the simplest use-cases, which is to parse into enums, and generate help text in case of a failure. The crate [gumdrop](https://docs.rs/gumdrop/) is a reasonable alternative in this case, which only supports a derive API
+The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featured crate. It provides both a builder and derive style API and has tons of features (help generation, validation, suggestions, completion, etc.). However most people only need the simplest use-cases, which is to parse flags into struct, commands into enums, and generate help text in case of a failure. The crate [gumdrop](https://docs.rs/gumdrop/) is a reasonable alternative in this case, which only supports the derive API and lacks some advanced features, but it has less dependencies and much smaller binary output.
 
 **Why is it so small**: clap's derive is just a convenient layer over their builder API, which makes them always build both of these crates. In gumdrop, only derive is compiled, which results in faster build times and smaller binaries.
 
 **What is the tradeoff**: gumdrop does a commandable job replicating clap's most important features, however it still missing some advanced ones (completion, colours, suggestions). It also has some quirks (no required commands, define help everywhere, etc.), and seems to be very sparsely developed.
 
-**When to use it**: If you only use the argument parser for simpler use-cases, gumdrop can be almost a drop-in replacement for clap. For more complicated argument parsing needs, if the user experience is important clap usually is a better choice.
+**When to use it**: If you only use the argument parser for simpler use-cases, gumdrop can be almost a drop-in replacement for clap. For more complicated argument parsing needs or if the user experience is important clap usually is a better choice.
 
-**Other contenders**: [bpaf](https://docs.rs/bpaf) is a more featureful, frequently developed crate, however it has similar size issues as clap. If you don't want to use the derive API, then [pico-args](https://docs.rs/pico-args) is also good.
+**Other contenders**: [bpaf](https://docs.rs/bpaf) is a more featureful, frequently developed crate, however it has similar size issues as clap. If you don't want to use the derive API, then [pico-args](https://docs.rs/pico-args) is also good choice.
 
 <details id="argparser">
 <summary>Detailed comparison between crates</summary>
@@ -50,7 +50,7 @@ One of the most downloaded crates, [serde](https://docs.rs/serde) is a flexible 
 
 **What is the tradeoff**: miniserde can only serialize from JSON and only to strings. It can't serialize data enums. It cannot print error location on failed parsing.
 
-**When to use it**: If you only use serde to transform JSON inside your application, miniserde is a good replacement. If you need to deserialize user input and provide error location, serde is a better choice.
+**When to use it**: If you only use serde to transform JSON inside your application, miniserde is a good replacement. If you need to deserialize user input, serde is a better choice, because it can print the error location.
 
 **Other contenders**: Another good library is [nanoserde](https://docs.rs/nanoserde/) which supports multiple formats, without any derive macro. It is faster compilation, but the binary size is not much smaller.
 
