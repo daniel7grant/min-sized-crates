@@ -4,7 +4,7 @@ Based on [min-sized-rust](https://github.com/johnthagen/min-sized-rust), a proje
 
 ## Baseline
 
-All examples are compiled with --release and --strip enabled. To calculate valid sizes for the crates we look at the size increase from the baseline default "Hello World" crate (355kB).
+All examples are compiled with --release and strip enabled. To calculate valid sizes for the crates we look at the size increase from the baseline default "Hello World" crate (355kB). This means if a crate builds to 500kB, then it counts as a +145kB increase.
 
 For all examples, these versions are used (but you are encouraged to repeat these experiment on an OS and version that is important to you):
 
@@ -12,16 +12,20 @@ Rust version: 1.75.0 (82e1608df 2023-12-21)
 Arch: x86_64
 OS: GNU/Linux
 
-## clap -> gumdrop
+## argparser: clap -> gumdrop
 
-clap: +520kB
-gumdrop: +28kB (-94.6%)
+- clap: +520kB
+- gumdrop: +28kB (**-94.6%**)
 
-**Why is it so small**:
+The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featured crate. It provides both a builder and derive style API and has tons of features (help generation, validation, suggestions, completion, etc.). However most people only need the simplest use-cases, which is to parse into enums, and generate help text in case of a failure. The crate [gumdrop](https://docs.rs/gumdrop/) is a reasonable alternative in this case, which only supports a derive API
 
-**What is the tradeoff**: gumdrop does a commandable job replicating clap's most important features, however it still missing some advanced ones (completion, colours, groups). It also seems to be very sparsely developed.
+**Why is it so small**: clap's derive is just a convenient layer over their builder API, which makes them always build both of these crates. In gumdrop, only derive is compiled, which results in faster build times and smaller binaries.
 
-**Other contenders**: bpaf is a more featureful, frequently developed crate. If you don't want derive, then picoargs is also good.
+**What is the tradeoff**: gumdrop does a commandable job replicating clap's most important features, however it still missing some advanced ones (completion, colours, suggestions). It also has some quirks (no required commands, define help everywhere, etc.), and seems to be very sparsely developed.
+
+**When to use it**: If you only use the argument parser for simpler use-cases, gumdrop can be almost a drop-in replacement for clap. For more complicated argument parsing needs, if the user experience is important clap usually is a better choice.
+
+**Other contenders**: [bpaf](https://docs.rs/bpaf) is a more featureful, frequently developed crate, however it has similar size issues as clap. If you don't want to use the derive API, then [pico-args](https://docs.rs/pico-args) is also good.
 
 ## TODO: serde -> miniserde
 
