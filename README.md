@@ -30,25 +30,40 @@ The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featur
 <details id="argparser">
 <summary>Detailed comparison between crates</summary>
 
-Name | Size | Time | Dependency count
+Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-bpaf-size | +244kB | +1.09s | 6
-clap-size | +520kB | +1.50s | 16
-gumdrop-size | +28kB | +0.95s | 6
+bpaf-size | +244kB | +1.10s | 6
+clap-size | +520kB | +1.48s | 16
+gumdrop-size | +28kB | +0.94s | 6
 pico-args-size | +24kB | +0.10s | 1
 
 </details>
 
-## TODO: serde -> miniserde
+## serializer: serde -> miniserde
 
-serde:
-miniserde:
+- serde: +84kB
+- miniserde: +40kB (**-52.38%**)
 
-**Why is it small**: miniserde drops some of serde's feature, most importantly it's flexibility. It can only serialize to and deserialize from JSON, and it only ha one attribute to rename fields. This makes the output much smaller.
+One of the most downloaded crates, [serde](https://docs.rs/serde) is a flexible crate for serializing, often used for serializing JSON with [serde_json](https://docs.rs/serde_json). However if you only use it for JSON serialization, it is probably not worth to install multiple crates, and using [miniserde](https://docs.rs/miniserde) can be preferable. It is a simpler, JSON-only alternative without any monomorphisation or recursion.
 
-**What is the tradeoff**: only JSON can be used, no advanced renaming, flattening, cannot print error location on failed parsing. If you only use serde to transform JSON inside your application, it can be fine.
+**Why is it small**: miniserde drops some of serde's feature, most importantly it's flexibility. It can only serialize to and deserialize from JSON, and it only has one attribute to rename fields. It also avoids monomorphization, making the output much smaller.
 
-**Other contenders**: nanoserde.
+**What is the tradeoff**: miniserde can only serialize from JSON and only to strings. It can't serialize data enums. It cannot print error location on failed parsing.
+
+**When to use it**: If you only use serde to transform JSON inside your application, miniserde is a good replacement. If you need to deserialize user input and provide error location, serde is a better choice.
+
+**Other contenders**: Another good library is [nanoserde](https://docs.rs/nanoserde/) which supports multiple formats, without any derive macro. It is faster compilation, but the binary size is not much smaller.
+
+<details id="serializer">
+<summary>Detailed comparison between crates</summary>
+
+Name | Size | Compile time | Dependency count
+---|:-:|:-:|:-:
+miniserde-size | +40kB | +0.69s | 8
+nanoserde-size | +72kB | +0.43s | 2
+serde-size | +84kB | +1.90s | 9
+
+</details>
 
 ## TODO: reqwest -> ureq
 

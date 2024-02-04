@@ -53,7 +53,7 @@ def generate_markdown_table(sizes, baseline):
 
 sizes = { 'baseline': calculate_size('baseline') }
 tables = {}
-for category in ['argparser']:
+for category in ['argparser', 'serializer']:
     os.chdir(category)
     
     sizes[category] = {}
