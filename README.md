@@ -27,6 +27,18 @@ The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featur
 
 **Other contenders**: [bpaf](https://docs.rs/bpaf) is a more featureful, frequently developed crate, however it has similar size issues as clap. If you don't want to use the derive API, then [pico-args](https://docs.rs/pico-args) is also good.
 
+<details id="argparser">
+<summary>Detailed comparison between crates</summary>
+
+Name | Size | Time | Dependency count
+---|:-:|:-:|:-:
+bpaf-size | +244kB | +1.09s | 6
+clap-size | +520kB | +1.50s | 16
+gumdrop-size | +28kB | +0.95s | 6
+pico-args-size | +24kB | +0.10s | 1
+
+</details>
+
 ## TODO: serde -> miniserde
 
 serde:
