@@ -1,14 +1,13 @@
 [package]
-name = "reqwest-size"
+name = "reqwest-blocking-size"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-reqwest = { version = "0.11.24", features = ["json", "rustls-tls"] }
+reqwest = { version = "0.11.24", features = ["json", "blocking", "rustls-tls"], default-features = false }
 serde = { version = "1.0.196", features = ["derive"] }
-tokio = { version = "1", features = ["full"] }
 
 [profile.release]
 strip = true

@@ -70,7 +70,9 @@ serde-size | +84kB | +1.90s | 9
 - reqwest:
 - minreq:
 
-**Why is it small**: reqwest is an async crate (depends on tokio) while ureq is completely blocking. As a rule of thumb, if you are aiming for small binaries and fast compilation, you should avoid async as long as you can.
+For HTTP clients, the most popular crate is [reqwest](https://docs.rs/reqwest). Reqwest is an async crate, which means that it depends on a whole tokio runtime to be pulled in. As a rule of thumb, if you are aiming for small binaries and fast compilation, you should avoid async as long as you can. Especially on HTTP client, where a large number of concurrent requests are rare. A smaller alternative is [minreq](https://docs.rs/minreq) which only offers a blocking API, and focused on being minimal out-of-the-box, and adding features only when necessary.
+
+**Why is it small**: 
 
 **What is the tradeoff**:
 
@@ -84,7 +86,8 @@ serde-size | +84kB | +1.90s | 9
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 minreq-size | +1404kB | +9.07s | 23
-reqwest-size | +2722kB | +12.31s | 79
+reqwest-blocking-size | +3834kB | +-0.06s | 72
+reqwest-size | +4014kB | +9.60s | 89
 surf-size | +1574kB | +13.28s | 155
 ureq-size | +2112kB | +9.93s | 44
 
