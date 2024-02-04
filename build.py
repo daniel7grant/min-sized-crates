@@ -53,7 +53,7 @@ def generate_markdown_table(sizes, baseline):
 
 sizes = { 'baseline': calculate_size('baseline') }
 tables = {}
-for category in ['argparser', 'serializer']:
+for category in ['argparser', 'serializer', 'http-client']:
     os.chdir(category)
     
     sizes[category] = {}
@@ -66,7 +66,7 @@ for category in ['argparser', 'serializer']:
     tables[category] = generate_markdown_table(sizes[category], sizes['baseline'])
 
 
-start = re.compile(r'<details id="([a-z]*)">')
+start = re.compile(r'<details id="([a-z_-]*)">')
 end = re.compile(r'</details>')
 with open('README.md', 'r') as infile:
     with open('README.results.md', 'w') as outfile:
