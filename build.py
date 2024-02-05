@@ -17,8 +17,7 @@ def calculate_size(name):
             os.chdir('..')
             return size
 
-    if FORCE_NO_CACHE:
-        subprocess.run(["cargo", "clean", "-q"])
+    subprocess.run(["cargo", "clean", "-q"])
 
     start_time = time.time()
     subprocess.run(["cargo", "build", "--release", "-q"])
@@ -50,16 +49,29 @@ def generate_markdown_table(sizes, baseline):
 ---|:-:|:-:|:-:
 {rows}"""
 
+# Calculate baseline
+print("baseline: ", end='', flush=True)
+baseline = calculate_size('baseline')
+sizes = { 'baseline': baseline }
+print(f"{int(baseline['compile_size'] / 1024)}kB {baseline['compile_time']:.2f}s")
 
-sizes = { 'baseline': calculate_size('baseline') }
+# Calculate all categories
 tables = {}
 for category in ['argparser', 'serializer', 'http-client']:
+    print(f'\n{category}:')
+
     os.chdir(category)
     
     sizes[category] = {}
     for name in sorted(os.listdir('.')):
         if os.path.isdir(name):
-            sizes[category][name] = calculate_size(name)
+            print(f"  {name}: ", end='', flush=True)
+            size = calculate_size(name)
+            sizes[category][name] = size
+
+            size_increase = int((size['compile_size'] - baseline['compile_size']) / 1024)
+            time_increase = size['compile_time'] - baseline['compile_time']
+            print(f"+{size_increase}kB +{time_increase:.2f}s ({size['dependencies']} dependencies)")
 
     os.chdir('..')
 
