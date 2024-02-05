@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use ureq::{get, Error};
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Ipinfo {
     pub ip: String,
     pub hostname: String,

@@ -2,7 +2,7 @@ use async_std::task;
 use serde::{Deserialize, Serialize};
 use surf::{get, Error};
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Ipinfo {
     pub ip: String,
     pub hostname: String,

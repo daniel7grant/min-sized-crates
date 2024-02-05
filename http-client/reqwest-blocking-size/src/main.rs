@@ -1,7 +1,7 @@
 use reqwest::{blocking::get, Error};
 use serde::{Deserialize, Serialize};
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Ipinfo {
     pub ip: String,
     pub hostname: String,
