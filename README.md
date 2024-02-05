@@ -48,11 +48,11 @@ One of the most downloaded crates, [serde](https://docs.rs/serde) is a flexible 
 
 **Why is it small**: miniserde drops some of serde's feature, most importantly it's flexibility. It can only serialize to and deserialize from JSON, and it only has one attribute to rename fields. It also avoids monomorphization, making the output much smaller.
 
-**What is the tradeoff**: miniserde can only serialize from JSON and only to strings. It can't serialize data enums. It cannot print error location on failed parsing.
+**What is the tradeoff**: miniserde can only serialize from JSON and only to strings. It can't serialize data enums. It cannot print error location on failed parsing. Many crates depend on serde explicitly.
 
-**When to use it**: If you only use serde to transform JSON inside your application, miniserde is a good replacement. If you need to deserialize user input, serde is a better choice, because it can print the error location.
+**When to use it**: If you only use serde to transform JSON inside your application, miniserde is a good replacement. If you need to deserialize user input, serde is a better choice, because it can print the error location. Also, if your other dependencies depend on serde (and you can't work around it), you have to use that.
 
-**Other contenders**: Another good library is [nanoserde](https://docs.rs/nanoserde/) which supports multiple formats, without any derive macro. It is faster compilation, but the binary size is not much smaller.
+**Other contenders**: Another good crate is [nanoserde](https://docs.rs/nanoserde/) which supports multiple formats, without any derive macro. It is faster compilation, but the binary size is not much smaller.
 
 <details id="serializer">
 <summary>Detailed comparison between crates</summary>
@@ -67,29 +67,30 @@ serde-size | +84kB | +1.90s | 9
 
 ## http-client: reqwest -> minreq
 
-- reqwest:
-- minreq:
+- reqwest: +2722kB
+- minreq: +332kB (**-87.80%**)
 
 For HTTP clients, the most popular crate is [reqwest](https://docs.rs/reqwest). Reqwest is an async crate, which means that it depends on a whole tokio runtime to be pulled in. As a rule of thumb, if you are aiming for small binaries and fast compilation, you should avoid async as long as you can. Especially on HTTP client, where a large number of concurrent requests are rare. A smaller alternative is [minreq](https://docs.rs/minreq) which only offers a blocking API, and focused on being minimal out-of-the-box, and adding features only when necessary.
 
-**Why is it small**: 
+**Why is it small**: Minreq only supports a blocking API (reqwest also has a blocking API, but it also uses the async version). Minreq has less dependencies, and they can be enabled as you go via feature flags (e.g. json, tls). Reqwest has a large number of dependencies, including hyper and tokio.
 
-**What is the tradeoff**:
+**What is the tradeoff**: Minreq only supports HTTP/1.1. It cannot send multipart files and doesn't support streaming or compression (if any of this is a dealbreaker, see *Other contenders/attohttpc*). It doesn't support any preconfiguration (e.g. Client in reqwest).
 
-**When to use it**:
+**When to use it**: If you only want to send simple requests to a server, minreq can be a viable option. If you already have tokio or you need a more featureful solution, you are better off with reqwest.
 
-**Other contenders**:
+**Other contenders**: [attohttpc](https://docs.rs/attohttpc) is another option with more features but similar footprint (multipart, streaming, compression). [ureq](https://docs.rs/ureq) is a bit bigger, but better-supported blocking client.
 
 <details id="http-client">
 <summary>Detailed comparison between crates</summary>
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-minreq-size | +1404kB | +9.07s | 23
-reqwest-blocking-size | +3834kB | +-0.06s | 72
-reqwest-size | +4014kB | +9.60s | 89
-surf-size | +1574kB | +13.28s | 155
-ureq-size | +2112kB | +9.93s | 44
+attohttpc-size | +844kB | +6.60s | 40
+minreq-size | +332kB | +5.72s | 25
+reqwest-blocking-size | +2670kB | +10.72s | 74
+reqwest-size | +2722kB | +12.74s | 79
+surf-size | +1574kB | +14.12s | 155
+ureq-size | +2112kB | +10.12s | 44
 
 </details>
 
