@@ -57,7 +57,7 @@ print(f"{int(baseline['compile_size'] / 1024)}kB {baseline['compile_time']:.2f}s
 
 # Calculate all categories
 tables = {}
-for category in ['argparser', 'serializer', 'http-client']:
+for category in ['argparser', 'serializer', 'logging', 'http-client', 'http-server']:
     print(f'\n{category}:')
 
     os.chdir(category)

@@ -65,6 +65,26 @@ serde-size | +84kB | +1.90s | 9
 
 </details>
 
+## logging: tracing -> log + simple_logger
+
+- tracing:
+- log + simple_logger: 
+
+**Why is it small**:
+
+**What is the tradeoff**:
+
+**When to use it**:
+
+**Other contenders**:
+
+<details id="http-server">
+<summary>Detailed comparison between crates</summary>
+
+
+
+</details>
+
 ## http-client: reqwest -> minreq
 
 - reqwest: +2722kB
@@ -78,7 +98,7 @@ For HTTP clients, the most popular crate is [reqwest](https://docs.rs/reqwest). 
 
 **When to use it**: If you only want to send simple requests to a server, minreq can be a viable option. If you already have tokio or you need a more featureful solution, you are better off with reqwest.
 
-**Other contenders**: [attohttpc](https://docs.rs/attohttpc) is another option with more features but similar footprint (multipart, streaming, compression). [ureq](https://docs.rs/ureq) is a bit bigger, but better-supported blocking client.
+**Other contenders**: [attohttpc](https://docs.rs/attohttpc) is another option with more features but similar footprint (multipart, streaming, compression). [ureq](https://docs.rs/ureq) is a bit bigger, but better-supported blocking client. If you are fine with external linking and a more cumbersome API, you can also use [curl](https://docs.rs/curl).
 
 <details id="http-client">
 <summary>Detailed comparison between crates</summary>
@@ -86,6 +106,7 @@ For HTTP clients, the most popular crate is [reqwest](https://docs.rs/reqwest). 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 attohttpc-size | +844kB | +6.60s | 40
+curl-size | +132kB |  | 19
 minreq-size | +332kB | +5.72s | 25
 reqwest-blocking-size | +2670kB | +10.72s | 74
 reqwest-size | +2722kB | +12.74s | 79
@@ -94,19 +115,32 @@ ureq-size | +2112kB | +10.12s | 44
 
 </details>
 
-## TODO: hyper -> tiny_http
+## http-server: hyper -> tiny_http
 
-hyper:
-tiny_http:
+- hyper: +752kB
+- tiny_http: +344kB (**-54.25%**)
 
-**Why is it small**: it is mirroring the previous case, tiny_http is a very minimal blocking HTTP server, so it gets ahead of hyper by avoiding the tokio dependency. However it has very good support for spinning up multiple threads, so it is far from a slow, single-threaded server. If you need an HTTP server for some small feature (e.g. webhook, OAuth), it can be fine, but for real-world backends, you should use a web framework.
+If you need a small HTTP-server for some minimal use-case (webhook, runtime configuration), a popular choice is the low-level HTTP library [hyper](https://docs.rs/hyper). However this is a full-featured async crate and it has a lot of dependencies, including tokio. A minimal, blocking HTTP server is [tiny_http](https://docs.rs/tiny_http). Despite being synchronous, tiny_http has very good support for spinning up multiple threads, so it is far from a slow, single-threaded server.
 
-**What is the tradeoff**: if you are already using
+**Why is it small**: Mirroring the previous case, tiny_http is a blocking HTTP server, so it gets ahead of hyper by avoiding the tokio dependency. Tiny_http is carefully written to use the least amount of dependencies, without SSL at the moment only 4.
 
-**Other contenders**: 
+**What is the tradeoff**: The main tradeoff is that tiny_http only supports HTTP/1.1. For high concurrent requests, the blocking / threadpool API is slower, so for performance, async might be preferable.
 
-## TODO: tracing -> log + simple_logger
+**When to use it**: If you need an HTTP server for some small feature (e.g. webhook, OAuth), tiny_http is a good choice. If you want to build a website, you should use a web framework, like [axum](https://docs.rs/axum).
 
-## TODO: chrono -> time
+**Other contenders**: If you are looking for a minimal framework, [rouille](https://docs.rs/rouille), which builds on tiny_http, is a good option. If you want to use a framework a popular choice is [axum](https://docs.rs/axum).
+
+<details id="http-server">
+<summary>Detailed comparison between crates</summary>
+
+Name | Size | Compile time | Dependency count
+---|:-:|:-:|:-:
+axum-size | +1874kB |  | 65
+hyper-size | +752kB |  | 52
+rouille-size | +408kB |  | 61
+tiny-http-size | +344kB |  | 5
+
+</details>
 
 ## TODO: color-eyre -> anyhow
+
