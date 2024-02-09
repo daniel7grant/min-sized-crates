@@ -132,8 +132,8 @@ for category in ['argparser', 'serializer', 'logging', 'http-client', 'http-serv
 
 
 # Replace tables with documentation
-start = re.compile(r'<details id="([a-z_-]*)">')
-end = re.compile(r'</details>')
+details_start = re.compile(r'<details id="([a-z_-]*)">')
+details_end = re.compile(r'</details>')
 # Replace spans with sizes
 information = re.compile(r'<span id="information/([a-z_-]*)">\w*</span>')
 size = re.compile(r'<span id="([a-z_-]*)/([a-z_-]*)">\w*</span>')
@@ -154,20 +154,21 @@ with open('README.md', 'r') as infile:
             # Replace <span id="category/name/base">-percent%</span> with real percents
             line = percent.sub(replace_span_percents, line)
 
+            # Replace <details id="category"> tables with the new table
             if current_id is None:
-                outfile.write(line)
-
-                match = start.match(line)
+                match = details_start.match(line)
                 if match:
                     current_id = match.group(1)
-                    outfile.write(f"""<summary>Detailed comparison between crates</summary>
 
-{tables[current_id]}
-</details>
-""")
+            # Don't write line if it's the old table
+            if current_id is not None and '|' in line:
+                continue
                     
-            else:
-                if end.match(line):
-                    current_id = None
+            # Write the table with the end
+            if current_id is not None and details_end.match(line):
+                outfile.write(tables[current_id])
+                current_id = None
+            
+            outfile.write(line)
 
 

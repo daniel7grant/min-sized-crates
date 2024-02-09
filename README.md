@@ -46,13 +46,13 @@ The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featur
 <details id="argparser">
 <summary>Detailed comparison between crates</summary>
 
+
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 bpaf-size | +244kB | +3.04s | 6
 clap-size | +520kB | +3.12s | 16
 gumdrop-size | +28kB | +1.66s | 6
 pico-args-size | +24kB | +0.21s | 1
-
 </details>
 
 ### serializer: serde -> miniserde
@@ -73,12 +73,12 @@ One of the most downloaded crates, [serde](https://docs.rs/serde) is a flexible 
 <details id="serializer">
 <summary>Detailed comparison between crates</summary>
 
+
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 miniserde-size | +40kB | +1.67s | 8
 nanoserde-size | +72kB | +0.86s | 2
 serde-size | +84kB | +4.24s | 9
-
 </details>
 
 ### logging: tracing -> log + simple_logger
@@ -104,6 +104,7 @@ The new default for logging in Rust is [tracing](https://docs.rs/tracing). It ha
 <details id="logging">
 <summary>Detailed comparison between crates</summary>
 
+
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 env-logger-size | +1256kB | +4.68s | 15
@@ -114,7 +115,6 @@ slog-size | +236kB | +3.94s | 18
 tracing-json-size | +333kB | +3.47s | 24
 tracing-lib-size | +72kB | +2.61s | 10
 tracing-size | +225kB | +2.99s | 19
-
 </details>
 
 ### http-client: reqwest -> minreq
@@ -135,6 +135,9 @@ For HTTP clients, the most popular crate is [reqwest](https://docs.rs/reqwest). 
 <details id="http-client">
 <summary>Detailed comparison between crates</summary>
 
+All crates were run with default options or as presented in the documentation. If there was a choice `native-tls` was chosen instead of `rustls` (except `ureq`, where the default is `rustls`).
+
+
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 attohttpc-size | +844kB | +6.36s | 40
@@ -144,7 +147,6 @@ reqwest-blocking-size | +2670kB | +10.60s | 74
 reqwest-size | +2722kB | +11.71s | 79
 surf-size | +1574kB | +13.23s | 155
 ureq-size | +2112kB | +9.68s | 44
-
 </details>
 
 ### http-server: hyper -> tiny_http
@@ -165,12 +167,12 @@ If you need a small HTTP-server for some minimal use-case (webhook, runtime conf
 <details id="http-server">
 <summary>Detailed comparison between crates</summary>
 
+
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 axum-size | +1874kB | +12.87s | 65
 hyper-size | +752kB | +9.56s | 52
 rouille-size | +408kB | +7.87s | 61
 tiny-http-size | +344kB | +0.94s | 5
-
 </details>
 
