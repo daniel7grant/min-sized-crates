@@ -49,10 +49,10 @@ The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featur
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-bpaf-size | +244kB | +3.04s | 6
-clap-size | +520kB | +3.12s | 16
-gumdrop-size | +28kB | +1.66s | 6
-pico-args-size | +24kB | +0.21s | 1
+bpaf-size | +244kB | +3.15s | 6
+clap-size | +520kB | +3.31s | 16
+gumdrop-size | +28kB | +1.82s | 6
+pico-args-size | +24kB | +0.23s | 1
 </details>
 
 ### serializer: serde -> miniserde
@@ -76,9 +76,9 @@ One of the most downloaded crates, [serde](https://docs.rs/serde) is a flexible 
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-miniserde-size | +40kB | +1.67s | 8
-nanoserde-size | +72kB | +0.86s | 2
-serde-size | +84kB | +4.24s | 9
+miniserde-size | +40kB | +1.74s | 8
+nanoserde-size | +72kB | +0.95s | 2
+serde-size | +84kB | +4.46s | 9
 </details>
 
 ### logging: tracing -> log + simple_logger
@@ -107,14 +107,14 @@ The new default for logging in Rust is [tracing](https://docs.rs/tracing). It ha
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-env-logger-size | +1256kB | +4.68s | 15
-log-lib-size | +4kB | +0.11s | 1
-simple-logger-size | +68kB | +2.23s | 13
-simplelog-size | +68kB | +2.12s | 12
-slog-size | +236kB | +3.94s | 18
-tracing-json-size | +333kB | +3.47s | 24
-tracing-lib-size | +72kB | +2.61s | 10
-tracing-size | +225kB | +2.99s | 19
+env-logger-size | +1256kB | +3.90s | 15
+log-lib-size | +4kB | +0.10s | 1
+simple-logger-size | +68kB | +1.57s | 13
+simplelog-size | +68kB | +1.66s | 12
+slog-size | +236kB | +2.64s | 18
+tracing-json-size | +333kB | +3.42s | 24
+tracing-lib-size | +72kB | +2.60s | 10
+tracing-size | +225kB | +3.04s | 19
 </details>
 
 ### http-client: reqwest -> minreq
@@ -140,13 +140,13 @@ All crates were run with default options or as presented in the documentation. I
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-attohttpc-size | +844kB | +6.36s | 40
-curl-size | +132kB | +4.78s | 19
-minreq-size | +332kB | +5.64s | 25
-reqwest-blocking-size | +2670kB | +10.60s | 74
-reqwest-size | +2722kB | +11.71s | 79
-surf-size | +1574kB | +13.23s | 155
-ureq-size | +2112kB | +9.68s | 44
+attohttpc-size | +844kB | +7.05s | 40
+curl-size | +132kB | +4.77s | 19
+minreq-size | +332kB | +6.02s | 25
+reqwest-blocking-size | +2670kB | +11.33s | 74
+reqwest-size | +2722kB | +12.84s | 79
+surf-size | +1574kB | +14.68s | 155
+ureq-size | +2112kB | +10.56s | 44
 </details>
 
 ### http-server: hyper -> tiny_http
@@ -170,9 +170,9 @@ If you need a small HTTP-server for some minimal use-case (webhook, runtime conf
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-axum-size | +1874kB | +12.87s | 65
-hyper-size | +752kB | +9.56s | 52
-rouille-size | +408kB | +7.87s | 61
-tiny-http-size | +344kB | +0.94s | 5
+axum-size | +1874kB | +12.96s | 65
+hyper-size | +752kB | +8.98s | 52
+rouille-size | +408kB | +5.66s | 61
+tiny-http-size | +344kB | +0.98s | 5
 </details>
 
