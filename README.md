@@ -67,21 +67,37 @@ serde-size | +84kB | +1.90s | 9
 
 ## logging: tracing -> log + simple_logger
 
-- tracing:
-- log + simple_logger: 
+For libraries:
+- tracing: +72kB
+- log: +4kB (**-94.44%**)
 
-**Why is it small**:
+For applications:
+- tracing + tracing-subscriber: +225kB
+- log + simple_logger: +68kB (**-69.77%**)
 
-**What is the tradeoff**:
+The new default for logging in Rust is [tracing](https://docs.rs/tracing). It has spans to describe events, that has a beginning and the end and can output structured logging (JSON format). It also has a great [ecosystem of crates](https://docs.rs/tracing/latest/tracing/#related-crates), for example exporting to OpenTelemetry or Loki. However these features are not needed for every application, and for these the original logging crate [log](https://docs.rs/log) is often a good alternative. Especially for applications, log with [simple_logger](https://docs.rs/simple_logger) can be much smaller than tracing with [tracing-subscriber](https://docs.rs/tracing-subscriber).
 
-**When to use it**:
+**Why is it small**: log is a very lightweight crate, that only provides the API for logging. Implementation logic is up to the loggers, and there are crates like simple_logger that are aiming for a minimal solution with very few dependencies. It also doesn't have key-value pairs, further simplifying the code.
 
-**Other contenders**:
+**What is the tradeoff**: log doesn't have any capability to structured logging, no key-value pairs. It also doesn't support spans. Because of this, it cannot connect to OpenTelemetry-compatible collectors.
 
-<details id="http-server">
+**When to use it**: If you only want to print messages with a log-level, log can be a good choice. Especially in libraries, log can be better (if there is no need for spans), because tracing-using applications can use [tracing-log](https://docs.rs/tracing-log) for compatibility. If you are writing an application that needs spans, structured logging or uses OpenTelemetry, tracing is a better option.
+
+**Other contenders**: [simplelog](https://docs.rs/simplelog) is also a good logger, that can be configured with a wide variety of settings, but the defaults are not particularly good. If you want to use structured logging with JSON output, you can try [slog](https://docs.rs/slog), but it isn't much smaller than tracing-subscriber with json enabled.
+
+<details id="logging">
 <summary>Detailed comparison between crates</summary>
 
-
+Name | Size | Compile time | Dependency count
+---|:-:|:-:|:-:
+env-logger-size | +1256kB | +4.68s | 15
+log-lib-size | +4kB | +0.11s | 1
+simple-logger-size | +68kB | +2.23s | 13
+simplelog-size | +68kB | +2.12s | 12
+slog-size | +236kB | +3.94s | 18
+tracing-json-size | +333kB | +3.47s | 24
+tracing-lib-size | +72kB | +2.61s | 10
+tracing-size | +225kB | +2.99s | 19
 
 </details>
 
@@ -98,20 +114,20 @@ For HTTP clients, the most popular crate is [reqwest](https://docs.rs/reqwest). 
 
 **When to use it**: If you only want to send simple requests to a server, minreq can be a viable option. If you already have tokio or you need a more featureful solution, you are better off with reqwest.
 
-**Other contenders**: [attohttpc](https://docs.rs/attohttpc) is another option with more features but similar footprint (multipart, streaming, compression). [ureq](https://docs.rs/ureq) is a bit bigger, but better-supported blocking client. If you are fine with external linking and a more cumbersome API, you can also use [curl](https://docs.rs/curl).
+**Other contenders**: [attohttpc](https://docs.rs/attohttpc) is another option with more features but similar footprint (multipart, streaming, compression). [ureq](https://docs.rs/ureq) is a bit bigger, but better-supported blocking client. If you are fine with external linking and a more cumbersome API, you can also use [curl](https://docs.rs/curl), which gives even better size improvements.
 
 <details id="http-client">
 <summary>Detailed comparison between crates</summary>
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-attohttpc-size | +844kB | +6.60s | 40
-curl-size | +132kB |  | 19
-minreq-size | +332kB | +5.72s | 25
-reqwest-blocking-size | +2670kB | +10.72s | 74
-reqwest-size | +2722kB | +12.74s | 79
-surf-size | +1574kB | +14.12s | 155
-ureq-size | +2112kB | +10.12s | 44
+attohttpc-size | +844kB | +6.36s | 40
+curl-size | +132kB | +4.78s | 19
+minreq-size | +332kB | +5.64s | 25
+reqwest-blocking-size | +2670kB | +10.60s | 74
+reqwest-size | +2722kB | +11.71s | 79
+surf-size | +1574kB | +13.23s | 155
+ureq-size | +2112kB | +9.68s | 44
 
 </details>
 
@@ -135,10 +151,10 @@ If you need a small HTTP-server for some minimal use-case (webhook, runtime conf
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-axum-size | +1874kB |  | 65
-hyper-size | +752kB |  | 52
-rouille-size | +408kB |  | 61
-tiny-http-size | +344kB |  | 5
+axum-size | +1874kB | +12.87s | 65
+hyper-size | +752kB | +9.56s | 52
+rouille-size | +408kB | +7.87s | 61
+tiny-http-size | +344kB | +0.94s | 5
 
 </details>
 
