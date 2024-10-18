@@ -135,9 +135,9 @@ for category in ['argparser', 'serializer', 'logging', 'http-client', 'http-serv
 details_start = re.compile(r'<details id="([a-z_-]*)">')
 details_end = re.compile(r'</details>')
 # Replace spans with sizes
-information = re.compile(r'<span id="information/([a-z_-]*)">\w*</span>')
-size = re.compile(r'<span id="([a-z_-]*)/([a-z_-]*)">\w*</span>')
-percent = re.compile(r'<span id="([a-z_-]*)/([a-z_-]*)/([a-z_-]*)">\w*</span>')
+information = re.compile(r'<span id="information/([a-z_-]*)">[^<]*</span>')
+size = re.compile(r'<span id="([a-z_-]*)/([a-z_-]*)">[^<]*</span>')
+percent = re.compile(r'<span id="([a-z_-]*)/([a-z_-]*)/([a-z_-]*)">[^<]*</span>')
 replace_span_information = generate_span_information(baseline)
 replace_span_sizes = generate_span_sizes(sizes, baseline)
 replace_span_percents = generate_span_percents(sizes, baseline)
@@ -145,7 +145,7 @@ with open('README.md', 'r') as infile:
     with open('README.results.md', 'w') as outfile:
         current_id = None
         for line in infile:
-            # Replace <span id="name">information</span> with real information about the baseline or platform
+            # Replace <span id="information/name">information</span> with real information about the baseline or platform
             line = information.sub(replace_span_information, line)
 
             # Replace <span id="category/name">size</span> with real sizes in kb
