@@ -119,22 +119,29 @@ tracing-size | +217kB | +3.01s | 19
 
 ### regex: regex -> regex-lite
 
-- regex: <span id="regex/regex-size">+88kB</span>
-- regex-lite: <span id="regex/regex-lite-size">+44kB</span> (**<span id="regex/regex-lite-size/regex-size">-50.01%</span>**)
+- regex: <span id="regex/regex-size">+1804kB</span>
+- regex-lite: <span id="regex/regex-lite-size">+108kB</span> (**<span id="regex/regex-lite-size/regex-size">-94.01%</span>**)
 
+Unlike other languages, in Rust regular expressions are not part of the standard library but powered by a third-party crate [regex](https://docs.rs/regex). This is a crate optimized for runtime performance and correctness [even at the cost of build performance](https://docs.rs/regex/latest/regex/#crate-features). It's a good tradeoff for most cases, however it can lead to slow compilation and large binaries. To address this, BurntSushi, the original author of `regex` introduced a lightweight alternative crate [regex-lite](https://docs.rs/regex-lite). This aims to be a drop-in replacement, as correct as the original `regex` ([passing the original tests](https://www.reddit.com/r/rust/comments/14ralde/comment/jqrlmsd/)) but without performance optimizations.
 
+**Why is it small**: It was specifically written with compile times in mind with zero dependencies and a smaller codebase.
 
-**Why is it small**:
+**What is the tradeoff**: The main tradeoff is [lower performance](https://github.com/BurntSushi/rebar#summary-of-search-time-benchmarks). Apart from this, it can only search string slices, has worse error handling and has only partial support for Unicode. For a full comparison, see [Differences with the regex crate](https://docs.rs/regex-lite/latest/regex_lite/#differences-with-the-regex-crate).
 
-**What is the tradeoff**: 
+**When to use it**: If regex parsing is not on your hot path and Unicode is not needed, you can drop in `regex-lite` for `regex` to get a smaller binary.
 
-**When to use it**:
-
-**Other contenders**:
+**Other contenders**: [onig](https://docs.rs/onig) is a crate that binds to the Oniguruma C library. Linking statically is much larger than `regex-lite` (however still an improvement over `regex`), but if you are sure that your users have `libonig` installed it can be [dynamically linked](https://github.com/rust-onig/rust-onig#linking).
 
 <details id="regex">
 <summary>Detailed comparison between crates</summary>
 
+Name | Size | Compile time | Dependency count
+---|:-:|:-:|:-:
+fancy-regex-size | +2104kB | +5.79s | 7
+onig-size | +526kB | +6.64s | 7
+regex-lite-size | +108kB | +1.01s | 1
+regex-no-unicode-size | +524kB | +2.55s | 3
+regex-size | +1804kB | +4.15s | 5
 </details>
 
 ### http-client: reqwest -> minreq
