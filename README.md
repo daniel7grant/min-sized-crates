@@ -117,6 +117,26 @@ tracing-lib-size | +72kB | +2.67s | 10
 tracing-size | +217kB | +3.01s | 19
 </details>
 
+### regex: regex -> regex-lite
+
+- regex: <span id="regex/regex-size">+88kB</span>
+- regex-lite: <span id="regex/regex-lite-size">+44kB</span> (**<span id="regex/regex-lite-size/regex-size">-50.01%</span>**)
+
+
+
+**Why is it small**:
+
+**What is the tradeoff**: 
+
+**When to use it**:
+
+**Other contenders**:
+
+<details id="regex">
+<summary>Detailed comparison between crates</summary>
+
+</details>
+
 ### http-client: reqwest -> minreq
 
 - reqwest: <span id="http-client/reqwest-size">+2591kB</span>
