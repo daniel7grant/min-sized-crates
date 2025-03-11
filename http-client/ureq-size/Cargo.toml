@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
-ureq = { version = "2.9.4", features = ["json"] }
+ureq = { version = "3.0", features = ["json"] }
 
 [profile.release]
 strip = true
