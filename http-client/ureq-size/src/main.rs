@@ -16,7 +16,7 @@ pub struct Ipinfo {
 }
 
 fn main() -> Result<(), Error> {
-    let ipinfo: Ipinfo = get("https://ipinfo.io/json").call()?.into_json()?;
+    let ipinfo: Ipinfo = get("https://ipinfo.io/json").call()?.body_mut().read_json()?;
 
     println!("{}", ipinfo.ip);
 
