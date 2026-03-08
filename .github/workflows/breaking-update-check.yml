@@ -1,0 +1,21 @@
+on:
+  schedule:
+    - cron: "0 16 * * *"
+
+jobs:
+  breaking-update-check:
+    name: Check if we there are breaking updates 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the tag
+        uses: actions/checkout@v4
+      - name: Add toolchain for Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - name: Install Cargo binstall
+        uses: cargo-bins/cargo-binstall@main
+      - name: Install Cargo outdated
+        run: cargo binstall cargo-outdated -y
+      - name: Run cargo
+        run: python update.py
