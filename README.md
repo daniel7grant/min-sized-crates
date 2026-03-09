@@ -12,7 +12,7 @@ All examples are compiled with `--release` and `strip` enabled. To calculate val
 
 - Rust version: <span id="information/rust-version">rustc 1.94.0 (4a4ef493e 2026-03-02)</span>
 - Arch: <span id="information/arch">x86_64</span>
-- OS: <span id="information/os">Linux-6.18.13-arch1-1-x86_64-with-glibc2.43</span>
+- OS: <span id="information/os">Linux-6.19.6-arch1-1-x86_64-with-glibc2.43</span>
 
 If you want to reproduce the results, you need [Python](https://www.python.org/downloads/). Run this script to print results and generate a `README.results.md` with data on your device:
 
@@ -55,10 +55,10 @@ The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featur
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-bpaf-size | +235kB | +3.00s | 6
-clap-size | +489kB | +2.72s | 17
-gumdrop-size | +27kB | +1.52s | 6
-pico-args-size | +20kB | +0.22s | 1
+bpaf-size | +235kB | +2.91s | 6
+clap-size | +489kB | +2.53s | 17
+gumdrop-size | +27kB | +1.34s | 6
+pico-args-size | +20kB | +-0.06s | 1
 </details>
 
 ### serializer: serde -> miniserde
@@ -82,9 +82,9 @@ One of the most downloaded crates, [serde](https://docs.rs/serde) is a flexible 
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-miniserde-size | +44kB | +1.56s | 8
-nanoserde-size | +71kB | +0.62s | 2
-serde-size | +91kB | +2.62s | 11
+miniserde-size | +44kB | +1.39s | 8
+nanoserde-size | +71kB | +0.35s | 2
+serde-size | +91kB | +2.46s | 11
 </details>
 
 ### logging: tracing -> log + simple_logger
@@ -115,14 +115,14 @@ The new default for logging in Rust is [tracing](https://docs.rs/tracing). It ha
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-env-logger-size | +1168kB | +3.75s | 16
-log-lib-size | +2kB | +0.10s | 1
-simple-logger-size | +67kB | +1.61s | 12
-simplelog-size | +72kB | +1.75s | 12
-slog-size | +253kB | +2.53s | 21
-tracing-json-size | +319kB | +3.17s | 25
-tracing-lib-size | +70kB | +2.42s | 10
-tracing-size | +197kB | +2.71s | 18
+env-logger-size | +1168kB | +3.54s | 16
+log-lib-size | +2kB | +-0.15s | 1
+simple-logger-size | +67kB | +1.43s | 12
+simplelog-size | +72kB | +1.55s | 12
+slog-size | +253kB | +2.36s | 21
+tracing-json-size | +319kB | +3.00s | 25
+tracing-lib-size | +70kB | +2.23s | 10
+tracing-size | +197kB | +2.57s | 18
 </details>
 
 ### regex: regex -> regex-lite
@@ -146,11 +146,11 @@ Unlike other languages, in Rust regular expressions are not part of the standard
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-fancy-regex-size | +2020kB | +4.22s | 7
-onig-size | +549kB | +6.88s | 8
-regex-lite-size | +101kB | +0.65s | 1
-regex-no-unicode-size | +494kB | +2.11s | 3
-regex-size | +1711kB | +3.38s | 5
+fancy-regex-size | +2020kB | +4.03s | 7
+onig-size | +549kB | +6.93s | 8
+regex-lite-size | +101kB | +0.41s | 1
+regex-no-unicode-size | +494kB | +1.86s | 3
+regex-size | +1711kB | +3.17s | 5
 </details>
 
 ### http-client: reqwest -> minreq
@@ -176,13 +176,13 @@ All crates were run with default options or as presented in the documentation. I
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-attohttpc-size | +805kB | +6.65s | 65
-curl-size | +132kB | +3.18s | 23
-minreq-size | +329kB | +4.39s | 29
-reqwest-blocking-size | +1708kB | +8.78s | 93
-reqwest-size | +6278kB | +29.60s | 121
-surf-size | +1330kB | +13.59s | 173
-ureq-size | +2247kB | +11.35s | 40
+attohttpc-size | +805kB | +6.61s | 65
+curl-size | +132kB | +3.00s | 23
+minreq-size | +329kB | +4.33s | 29
+reqwest-blocking-size | +1708kB | +8.87s | 93
+reqwest-size | +6278kB | +29.73s | 121
+surf-size | +1330kB | +13.51s | 173
+ureq-size | +2247kB | +11.50s | 40
 </details>
 
 ### http-server: hyper -> tiny_http
@@ -207,7 +207,7 @@ If you need a small HTTP-server for some minimal use-case (webhook, runtime conf
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
 axum-size | +916kB | +8.52s | 56
-hyper-size | +719kB | +8.44s | 51
-rouille-size | +426kB | +6.60s | 84
-tiny-http-size | +336kB | +0.89s | 5
+hyper-size | +719kB | +8.58s | 51
+rouille-size | +426kB | +6.58s | 84
+tiny-http-size | +336kB | +0.65s | 5
 </details>
