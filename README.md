@@ -12,7 +12,7 @@ All examples are compiled with `--release` and `strip` enabled. To calculate val
 
 - Rust version: <span id="information/rust-version">rustc 1.95.0 (59807616e 2026-04-14)</span>
 - Arch: <span id="information/arch">x86_64</span>
-- OS: <span id="information/os">Linux-7.0.9-arch2-1-x86_64-with-glibc2.43</span>
+- OS: <span id="information/os">Linux-7.0.12-arch1-1-x86_64-with-glibc2.43</span>
 
 If you want to reproduce the results, you need [Python](https://www.python.org/downloads/). Run this script to print results and generate a `README.results.md` with data on your device:
 
@@ -55,9 +55,9 @@ The most popular argument parser, [clap](https://docs.rs/clap/) is a full-featur
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-bpaf-size | +237kB | +2.98s | 6
-clap-size | +488kB | +2.73s | 17
-gumdrop-size | +27kB | +1.52s | 6
+bpaf-size | +237kB | +3.42s | 6
+clap-size | +488kB | +3.09s | 17
+gumdrop-size | +27kB | +1.76s | 6
 pico-args-size | +19kB | +0.23s | 1
 </details>
 
@@ -82,9 +82,9 @@ One of the most downloaded crates, [serde](https://docs.rs/serde) is a flexible 
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-miniserde-size | +45kB | +1.60s | 8
-nanoserde-size | +70kB | +0.62s | 2
-serde-size | +91kB | +2.64s | 11
+miniserde-size | +45kB | +1.83s | 8
+nanoserde-size | +70kB | +0.67s | 2
+serde-size | +91kB | +2.96s | 11
 </details>
 
 ### logging: tracing -> log + simple_logger
@@ -96,8 +96,8 @@ For libraries:
 
 For applications:
 
-- tracing + tracing-subscriber: <span id="logging/tracing-size">+197kB</span>
-- log + simple_logger: <span id="logging/simple-logger-size">+69kB</span> (**<span id="logging/simple-logger-size/tracing-size">-65.02%</span>**)
+- tracing + tracing-subscriber: <span id="logging/tracing-size">+198kB</span>
+- log + simple_logger: <span id="logging/simple-logger-size">+69kB</span> (**<span id="logging/simple-logger-size/tracing-size">-65.10%</span>**)
 
 The new default for logging in Rust is [tracing](https://docs.rs/tracing). It has spans to describe events that has a beginning and the end, and can output structured logging (JSON format). It also has a great [ecosystem of crates](https://docs.rs/tracing/latest/tracing/#related-crates), for example exporting to OpenTelemetry or Loki. However these features are not needed for every application, and for these the original logging crate [log](https://docs.rs/log) is often a good alternative. Especially for applications, `log` with [simple_logger](https://docs.rs/simple_logger) can be much smaller than `tracing` with [tracing-subscriber](https://docs.rs/tracing-subscriber).
 
@@ -115,20 +115,20 @@ The new default for logging in Rust is [tracing](https://docs.rs/tracing). It ha
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-env-logger-size | +1166kB | +3.71s | 16
-log-lib-size | +3kB | +0.11s | 1
-simple-logger-size | +69kB | +1.68s | 12
-simplelog-size | +73kB | +1.77s | 12
-slog-size | +252kB | +2.55s | 21
-tracing-json-size | +341kB | +3.31s | 25
-tracing-lib-size | +67kB | +2.41s | 10
-tracing-size | +197kB | +2.69s | 18
+env-logger-size | +1169kB | +4.07s | 16
+log-lib-size | +3kB | +0.12s | 1
+simple-logger-size | +69kB | +2.17s | 11
+simplelog-size | +68kB | +2.18s | 11
+slog-size | +249kB | +2.88s | 21
+tracing-json-size | +339kB | +3.75s | 25
+tracing-lib-size | +67kB | +2.54s | 10
+tracing-size | +198kB | +3.11s | 18
 </details>
 
 ### regex: regex -> regex-lite
 
-- regex: <span id="regex/regex-size">+1707kB</span>
-- regex-lite: <span id="regex/regex-lite-size">+101kB</span> (**<span id="regex/regex-lite-size/regex-size">-94.05%</span>**)
+- regex: <span id="regex/regex-size">+1710kB</span>
+- regex-lite: <span id="regex/regex-lite-size">+101kB</span> (**<span id="regex/regex-lite-size/regex-size">-94.06%</span>**)
 
 Unlike other languages, in Rust regular expressions are not part of the standard library but powered by a third-party crate [regex](https://docs.rs/regex). This is a crate optimized for runtime performance and correctness [even at the cost of build performance](https://docs.rs/regex/latest/regex/#crate-features). It's a good tradeoff for most cases, however it can lead to slow compilation and large binaries. To address this, BurntSushi, the original author of `regex` introduced a lightweight alternative crate [regex-lite](https://docs.rs/regex-lite). This aims to be a drop-in replacement, as correct as the original `regex` ([passing the original tests](https://www.reddit.com/r/rust/comments/14ralde/comment/jqrlmsd/)) but without performance optimizations.
 
@@ -146,17 +146,17 @@ Unlike other languages, in Rust regular expressions are not part of the standard
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-fancy-regex-size | +2098kB | +4.56s | 7
-onig-size | +561kB | +7.21s | 8
-regex-lite-size | +101kB | +0.67s | 1
-regex-no-unicode-size | +494kB | +2.13s | 3
-regex-size | +1707kB | +3.41s | 5
+fancy-regex-size | +2106kB | +4.88s | 7
+onig-size | +561kB | +7.87s | 8
+regex-lite-size | +101kB | +0.73s | 1
+regex-no-unicode-size | +498kB | +2.30s | 3
+regex-size | +1710kB | +3.72s | 5
 </details>
 
 ### http-client: reqwest -> minreq
 
-- reqwest: <span id="http-client/reqwest-size">+6185kB</span>
-- minreq: <span id="http-client/minreq-size">+325kB</span> (**<span id="http-client/minreq-size/reqwest-size">-94.74%</span>**)
+- reqwest: <span id="http-client/reqwest-size">+6196kB</span>
+- minreq: <span id="http-client/minreq-size">+314kB</span> (**<span id="http-client/minreq-size/reqwest-size">-94.93%</span>**)
 
 For HTTP clients, the most popular crate is [reqwest](https://docs.rs/reqwest). `reqwest` is an async crate, which means that it depends on a whole `tokio` runtime to be pulled in. As a rule of thumb, if you are aiming for small binaries and fast compilation, you should avoid async as long as you can. Especially on HTTP client, where a large number of concurrent requests are rare. A smaller alternative is [minreq](https://docs.rs/minreq) which only offers a blocking API, and focused on being minimal out-of-the-box, and adding features only when necessary.
 
@@ -176,19 +176,19 @@ All crates were run with default options or as presented in the documentation. I
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-attohttpc-size | +786kB | +6.74s | 64
-curl-size | +131kB | +3.18s | 23
-minreq-size | +325kB | +4.43s | 28
-reqwest-blocking-size | +1648kB | +8.93s | 91
-reqwest-size | +6185kB | +30.09s | 119
-surf-size | +1293kB | +14.13s | 173
-ureq-size | +2220kB | +11.42s | 40
+attohttpc-size | +786kB | +7.87s | 64
+curl-size | +131kB | +3.46s | 23
+minreq-size | +314kB | +5.04s | 28
+reqwest-blocking-size | +1653kB | +10.16s | 91
+reqwest-size | +6196kB | +32.82s | 119
+surf-size | +1294kB | +15.77s | 173
+ureq-size | +2216kB | +12.82s | 40
 </details>
 
 ### http-server: hyper -> tiny_http
 
-- hyper: <span id="http-server/hyper-size">+711kB</span>
-- tiny_http: <span id="http-server/tiny-http-size">+321kB</span> (**<span id="http-server/tiny-http-size/hyper-size">-54.76%</span>**)
+- hyper: <span id="http-server/hyper-size">+709kB</span>
+- tiny_http: <span id="http-server/tiny-http-size">+321kB</span> (**<span id="http-server/tiny-http-size/hyper-size">-54.65%</span>**)
 
 If you need a small HTTP-server for some minimal use-case (webhook, runtime configuration), a popular choice is the low-level HTTP library [hyper](https://docs.rs/hyper). However this is a full-featured async crate and it has a lot of dependencies, including `tokio`. A minimal, blocking HTTP server is [tiny_http](https://docs.rs/tiny_http). Despite being synchronous, `tiny_http` has very good support for spinning up multiple threads, so it is far from a slow, single-threaded server.
 
@@ -206,8 +206,8 @@ If you need a small HTTP-server for some minimal use-case (webhook, runtime conf
 
 Name | Size | Compile time | Dependency count
 ---|:-:|:-:|:-:
-axum-size | +908kB | +8.47s | 55
-hyper-size | +711kB | +8.59s | 50
-rouille-size | +411kB | +6.77s | 84
-tiny-http-size | +321kB | +0.89s | 5
+axum-size | +908kB | +9.61s | 55
+hyper-size | +709kB | +9.69s | 50
+rouille-size | +407kB | +7.84s | 84
+tiny-http-size | +321kB | +1.04s | 5
 </details>
